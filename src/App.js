@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { HashRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 
-import Auth from './Components/Auth/Auth';
-import Dashboard from './Components/Dashboard/Dashboard';
-import Form from './Components/Form/Form';
+// Local components
 import Nav from './Components/Nav/Nav';
-import Post from './Components/Post/Post';
+import routes from './routes';
+import store from './ducks/store';
 
-function App() {
-  return (
-    <div className="App">
-      <Auth />
-      <Dashboard />
-      <Form />
-      <Nav />
-      <Post />
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <Nav />
+            {routes}
+          </div>
+        </Router>
+      </Provider>
+    );
+  }
 }
 
 export default App;

@@ -1,0 +1,45 @@
+.nav-bar {
+    float: left;
+    height: 100vh;
+    width: 100px;
+    background-image: linear-gradient(#FF9770, #FF70A6);
+    text-align: center;
+    color: white;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+}
+
+.nav-bar>img {
+    width: 70px;
+    height: 70px;
+    border-radius: 40px;
+    box-shadow: 0px 0px 10px black;
+    margin-top: 15px;
+    margin-bottom: 40px;
+}
+
+.nav-bar>button {
+    border: 0px;
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-position: center;
+    display: block;
+    margin: 25px auto;
+}
+button[name="dashboard"] {
+    background-image: url("../../assets/home_logo.png");
+}
+
+button[name="new"] {
+    background-image: url("../../assets/new_logo.png");
+}
+
+button[name="logout"] {
+    background-image: url("../../assets/shut_down.png");
+    position: absolute;
+    bottom: -5px;
+    left: 30px;
+}

@@ -19,7 +19,7 @@ class Form extends Component {
             img: this.state.img,
             content: this.state.content
         };
-        axios.post(`/api/post/${this.props.userid}`, body)
+        axios.post(`/api/post`, body)
             .then(response => {
                 this.props.history.push("/dashboard");
             })
@@ -51,10 +51,5 @@ class Form extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        userid: state.userid
-    }
-}
 
-export default connect(mapStateToProps)(Form);
+export default Form;

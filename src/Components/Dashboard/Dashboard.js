@@ -17,7 +17,7 @@ class Dashboard extends Component {
     }
 
     refreshPosts = () => {
-        axios.get(`/api/posts/${this.props.userid}?search=${encodeURIComponent(this.state.search)}&userposts=${this.state.userposts}`)
+        axios.get(`/api/posts?search=${encodeURIComponent(this.state.search)}&userposts=${this.state.userposts}`)
             .then(response => {
                 console.log(response)
                 this.setState({
@@ -53,8 +53,8 @@ class Dashboard extends Component {
     render() {
         const posts = this.state.posts.map((e, i) => {
             return (
-                <div className="post-preview center-box">
-                    <Link to={`/post/${e.postid}`} key={i} className="post-link">
+                <div className="post-preview center-box" key={i}>
+                    <Link to={`/post/${e.postid}`} className="post-link">
                         <h2>{e.title}</h2>
                         <div className="preview-profile">
                             <p>by {e.author}</p>
@@ -86,10 +86,4 @@ class Dashboard extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        userid: state.userid
-    }
-}
-
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;

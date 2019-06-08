@@ -27,7 +27,7 @@
     background-size: contain;
     background-position: center;
     display: block;
-    margin: 25px auto;
+    margin: 30px auto;
 }
 button[name="dashboard"] {
     background-image: url("../../assets/home_logo.png");

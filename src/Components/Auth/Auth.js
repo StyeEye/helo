@@ -34,10 +34,10 @@ class Auth extends Component {
 
         axios.post("/api/auth/register", body)
             .then(response => {
-                const { username, userid, profile } = response.data;
-                //console.log(username, userid, profile, response);
+                const { username, profile } = response.data;
+                //console.log(username, profile, response);
 
-                this.props.updateUser(userid, username, profile);
+                this.props.updateUser(username, profile);
 
                 this.props.history.push("/dashboard");
             }).catch(err => {
@@ -54,8 +54,8 @@ class Auth extends Component {
 
         axios.post("/api/auth/login", body)
             .then(response => {
-                const { username, userid, profile } = response.data;
-                this.props.updateUser(userid, username, profile);
+                const { username, profile } = response.data;
+                this.props.updateUser(username, profile);
 
                 this.props.history.push("/dashboard");
             }).catch(err => {

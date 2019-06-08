@@ -8,8 +8,8 @@ module.exports = {
             password: password,
             profile_pic: `https://robohash.org/${username}`
         }).then(response => {
+            req.session.userid = response.id;
             res.send({
-                userid: response.id,
                 username: response.username,
                 profile: response.profile_pic,
             });
@@ -26,8 +26,8 @@ module.exports = {
             password: password
         })
             .then(user => {
+                req.session.userid = user.id;
                 res.send({
-                    userid: user.id,
                     username: user.username,
                     profile: user.profile_pic,
                 });
@@ -38,7 +38,7 @@ module.exports = {
     },
     searchPosts: (req, res, next) => {
         const db = req.app.get("db");
-        const userid = parseInt(req.params.userid);
+        const userid = parseInt(req.session.userid);
         const includeOwn = req.query.userposts.toLowerCase() === 'true';
         const search = decodeURIComponent(req.query.search).toLowerCase();
 
@@ -62,7 +62,7 @@ module.exports = {
                         postid: e.id
                     }));
 
-                console.log(matches);
+                //console.log(matches);
                 res.send(matches);
             })
             .catch(err => {
@@ -72,13 +72,13 @@ module.exports = {
     getPost: (req, res, next) => {
         const db = req.app.get("db");
         const postid = parseInt(req.params.postid);
-        console.log(postid);
+        //console.log(postid);
 
         db.get_post({
             postid: postid
         })
             .then(post => {
-                console.log(post)
+                //console.log(post)
                 const data = {
                     title: post[0].title,
                     img: post[0].img,
@@ -95,8 +95,8 @@ module.exports = {
     },
     createPost: (req, res, next) => {
         const db = req.app.get("db");
-        const userid = parseInt(req.params.userid);
-        const {title, img, content} = req.body;
+        const userid = parseInt(req.session.userid);
+        const { title, img, content } = req.body;
 
         db.posts.insert({
             title: title,
@@ -110,6 +110,26 @@ module.exports = {
             })
             .catch(err => {
                 res.status(500).send(err);
+            });
+    },
+    logout: (req, res, next) => {
+        req.session.destroy();
+        res.send("User logged out");
+    },
+    currentUser: (req, res, next) => {
+        const db = req.app.get("db");
+        //console.log("Current user:", req.session.userid);
+        db.users.findOne({
+            id: parseInt(req.session.userid)
+        })
+            .then(user => {
+                res.send({
+                    username: user.username,
+                    profile: user.profile_pic,
+                });
             })
+            .catch(err => {
+                res.status(500).send(err);
+            });
     }
 };
